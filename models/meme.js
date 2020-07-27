@@ -4,8 +4,9 @@ const memeSchema = new mongoose.Schema({
     name: {type: String, default: "Un-Named Post"},
     low: {type: String, default: "0"},
     edited: {type: Boolean, default: false},
-    image: {type: String, default: "https://wallpapercave.com/wp/wp2537078.jpg"},
+    image: {type: String, default: "someImageURL.jpg"},
     description: {type: String, default: " "},
+    createdAt: {type: Date, default: Date.now},
     author: {
          id: {
             type: mongoose.Schema.Types.ObjectId,

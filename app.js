@@ -30,6 +30,7 @@ app.set("view engine", "ejs");
 app.use(express.static(`${__dirname}/public`));
 app.use(methodOverride("_method"));
 app.use(flash());
+app.locals.moment = require('moment');
 
 // PASSPORT CONFIGERATION
 app.use(require("express-session")({
@@ -55,6 +56,12 @@ app.use((req, res , next) => {
 app.use("/", indexRoutes);
 app.use("/memes", memeRoutes);
 app.use("/memes/:id/comments", commentRoutes);
+
+//Catch all route
+app.get("*", (req, res) => {
+    req.flash("error", "Page not found");
+    res.redirect("/");
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

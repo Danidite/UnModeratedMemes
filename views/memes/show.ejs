@@ -21,7 +21,7 @@
                   <p class="card-text"><%= meme.description%></p>
                 </div>
                 <div class="card-footer text-muted">
-                    <div>Submitted By: "<%= meme.author.username%>"</div>
+                    <div>Submitted By: "<%= meme.author.username%>", <%= moment(meme.createdAt).fromNow() %></div>
                     
                 <%  if(currentUser && (currentUser.username === "Danidite" || meme.author.id.equals(currentUser._id))) {%>
                     <div class="btn-group">
@@ -42,8 +42,13 @@
                     <strong><%= comment.author.username%></strong>
 
                     <%if(comment.edited===true) {   %>
-                        <span class="float-right">Edited</span>
+                        <span class="font-italic">[Comment Edited]</span>
                     <%} %>
+
+                    <span class="float-right font-weight-light">
+                        <%= moment(comment.createdAt).fromNow() %>
+                    </span>
+                    
                     <p class="my-2 font-weight-light">Rating: <%= comment.rating%></p>
                     
 
