@@ -28,7 +28,6 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     let newMeme = {name: name, low: low, image: image, description:desc, author: author};
     Meme.create (newMeme, (err, meme) => {
         if(err) {
-            console.log(err);
             req.flash("error", "Failed to create a new Meme!");
             res.redirect("/memes");
         } else {
@@ -46,9 +45,9 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
 // SHOW ROUTE
 router.get("/:id", (req, res) => {
     Meme.findById(req.params.id).populate("comments").exec((err, foundMeme) => {
-        if(err) {
-            console.log(err);
-            res.redirect("/memes");
+        if(err||!foundMeme) {
+            req.flash("error", "Meme not found");
+            res.redirect("back");
         } else {
             res.render("memes/show", {meme: foundMeme});
         }
@@ -88,7 +87,6 @@ router.delete("/:id", middleware.checkMemeOwnership, async(req, res) => {
         req.flash("success", "Meme successfully deleted");
         res.redirect("/memes");
     } catch (error) {
-        console.log(error);
         req.flash("error", "Memes not found");
         res.redirect("/memes");
     }

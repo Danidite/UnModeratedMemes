@@ -15,6 +15,10 @@ const middlewareObj = {
         try {
             if(req.isAuthenticated()) {
                 let foundMeme = await Meme.findById(req.params.id);
+                if (!foundMeme) {
+                    req.flash("error", "Meme not found");
+                    res.redirect("back");
+                }
                 if(req.user.username === "Danidite") {
                     return next();
                 }
@@ -29,8 +33,7 @@ const middlewareObj = {
                 res.redirect("back");
             }
         } catch (err) {
-            console.log(err);
-            req.flash("error", "Something went wrong!");
+            req.flash("error", "Meme not found");
             res.redirect("back");
         }
     },
@@ -38,6 +41,10 @@ const middlewareObj = {
         try {
             if(req.isAuthenticated()) {
                 let foundComment = await Comment.findById(req.params.comment_id);
+                if (!foundComment) {
+                    req.flash("error", "Comment not found!");
+                    res.redirect("back");
+                }
                 if(req.user.username === "Danidite") {
                     return next();
                 }
@@ -52,8 +59,7 @@ const middlewareObj = {
                 res.redirect("back");
             }
         } catch (err) {
-            console.log(err);
-            req.flash("error", "Something went wrong!");
+            req.flash("error", "Comment not found!");
             res.redirect("back");
         }
     }
