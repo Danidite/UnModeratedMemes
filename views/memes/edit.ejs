@@ -1,0 +1,32 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col border p-2 col-11 col-sm-10 col-md-9 col-lg-7">
+            <h1 class="mb-4">EDIT "<%= meme.name %>"</h1>
+
+            <form action="/memes/<%= meme._id %>?_method=PUT" method="POST" class="mb-2">
+                <div class="form-group">
+                    <label>Post Name</label>
+                    <input class="form-control" type="text" name="meme[name]" placeholder="Name of Post" value="<%= meme.name %>" required>
+                </div>
+                <div class="form-group">
+                    <label>Level of Offensiveness</label>
+                    <input class="form-control" type="number" name="meme[low]" placeholder="" min="0" value="<%= meme.low %>" step="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input class="form-control" type="text" name="meme[image]" placeholder="Image URL" value="<%= meme.image %>" required>
+                </div>
+                <div class="form-group">
+                    <label>Meme Description</label>
+                    <textarea class="form-control" rows="5" name="meme[description]" placeholder="Go wild, but not TOO wild..." required><%= meme.description %></textarea>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+            </form>
+            <a href="/memes/<%= meme._id %>">Go Back</a>
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>

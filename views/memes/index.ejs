@@ -1,0 +1,29 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-5">Welcome to Un-Moderated Memes</h1>
+            <p class="lead">View the ridiculous memes posted by our users</p>
+            <a class="btn btn-success btn-lg" href="/memes/new" role="button">Pose New Meme</a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <% for(const meme of memes) { %>
+            <div class="container col-md-6 col-lg-4 col-xl-4 p-1">
+                <div class="card p-0 text-center">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <img src="<%= meme.image %>" class="embed-responsive-item card-img-top" alt="No image found">
+                     </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center"><%= meme.name %></h5>
+                        <a href="/memes/<%= meme._id %>" class="btn btn-primary">More info</a>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>
