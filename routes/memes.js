@@ -17,15 +17,12 @@ router.get("/", (req, res) => {
 
 // CREATE ROUTE
 router.post("/", middleware.isLoggedIn, (req, res) => {
-    let name = req.body.name;
-    let low = req.body.low;
-    let image = req.body.image;
-    let desc = req.body.description;
+    let newMeme = req.body.meme;
     let author = {
         id: req.user._id,
         username: req.user.username
     }
-    let newMeme = {name: name, low: low, image: image, description:desc, author: author};
+    newMeme.author = author;
     Meme.create (newMeme, (err, meme) => {
         if(err) {
             req.flash("error", "Failed to create a new Meme!");

@@ -22,7 +22,6 @@ router.post("/register", (req, res) => {
     let newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, (err, user) => {
         if(err){
-            console.log(err);
             req.flash("error", err.message);
             return res.redirect('register');
         }
