@@ -1,6 +1,6 @@
 const  Meme    = require("../models/meme"),
        Comment       = require("../models/comment");
-const { count } = require("../models/meme");
+// const { count } = require("../models/meme");
 
 //All the middleware goes here
 const middlewareObj = {
@@ -19,10 +19,7 @@ const middlewareObj = {
                     req.flash("error", "Meme not found");
                     res.redirect("back");
                 }
-                if(req.user.username === "Danidite") {
-                    return next();
-                }
-                if(foundMeme.author.id.equals(req.user._id)) {
+                if(req.user.permissionLevel > 0 || foundMeme.author.id.equals(req.user._id)) {
                     return next();
                 } else {
                     req.flash("error", "You don't have permission to do that");
@@ -45,10 +42,7 @@ const middlewareObj = {
                     req.flash("error", "Comment not found!");
                     res.redirect("back");
                 }
-                if(req.user.username === "Danidite") {
-                    return next();
-                }
-                if(foundComment.author.id.equals(req.user._id)) {
+                if(req.user.permissionLevel > 0 || foundComment.author.id.equals(req.user._id)) {
                     return next();
                 } else {
                     req.flash("error", "You don't have permission to do that");

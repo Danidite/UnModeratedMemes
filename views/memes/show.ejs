@@ -22,8 +22,10 @@
                 </div>
                 <div class="card-footer text-muted">
                     <div>Submitted By: "<%= meme.author.username%>", <%= moment(meme.createdAt).fromNow() %></div>
-                    
-                <%  if(currentUser && (currentUser.username === "Danidite" || meme.author.id.equals(currentUser._id))) {%>
+                    <%if(meme.edited===true) {   %>
+                        <div class="font-italic">[Post Edited]</div>
+                    <%} %>
+                <%  if(currentUser && (currentUser.permissionLevel > 0 || meme.author.id.equals(currentUser._id))) {%>
                     <div class="btn-group">
                         <a href="/memes/<%= meme._id%>/edit" class="btn btn-warning my-2 mr-2">Edit</a>
                         <form action="/memes/<%= meme._id%>/?_method=DELETE" method="POST" class="form-inline ml-auto">
@@ -54,8 +56,8 @@
 
                     <p><%= comment.text%></p>   %>
 
-                <%  if(currentUser && (currentUser.username === "Danidite" || comment.author.id.equals(currentUser._id))) {%>
-                    <div class="btn-group mb-4">
+                <%  if(currentUser && (currentUser.permissionLevel >0 || comment.author.id.equals(currentUser._id))) {%>
+                    <div class="btn-group">
                         <a href="/memes/<%= meme._id%>/comments/<%= comment._id%>/edit" class="btn mr-2 btn-warning btn-sm">
                             Edit
                         </a>
